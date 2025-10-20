@@ -140,29 +140,5 @@ DirectoryDoors --> "*" Door : allDoors
 DirectoryUsers --> "*" User : users
 DirectoryAreas --> "*" Area : allAreas
 
-' === NOTAS EXPLICATIVAS ===
-note top of State
-<b>STATE PATTERN</b>
-Comportamiento polimórfico
-para estados de puerta
-end note
-
-note top of Partition
-<b>COMPOSITE PATTERN</b>
-Jerarquía recursiva de áreas
-y espacios
-end note
-
-note top of Clock
-<b>OBSERVER PATTERN</b>
-Notificaciones cada segundo
-para transiciones automáticas
-end note
-
-note top of DirectoryDoors
-<b>SINGLETON + FACTORY</b>
-Una instancia global
-centraliza creación
-end note
 
 @enduml

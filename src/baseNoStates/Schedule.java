@@ -13,7 +13,7 @@ public class Schedule {
   private final DayOfWeek toDayOfWeek;
   private final DayOfWeek fromDayOfWeek;
 
-  public Schedule(LocalDateTime fromdate, LocalDateTime todate, LocalTime fromhour, LocalTime tohour, DayOfWeek toDayOfWeek, DayOfWeek fromDayOfWeek) {
+  public Schedule(LocalDateTime fromdate, LocalDateTime todate, LocalTime fromhour, LocalTime tohour, DayOfWeek fromDayOfWeek, DayOfWeek toDayOfWeek) {
     this.fromDate = fromdate;
     this.toDate = todate;
     this.fromHour = fromhour;
