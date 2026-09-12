@@ -1,0 +1,37 @@
+@startuml
+'https://plantuml.com/class-diagram
+skinparam classAttributeIconSize 0
+
+package "Privileges" {
+    abstract class "Privileges" {
+        + {abstract} canSendRequests(now : LocalDateTime) : boolean
+        + {abstract} canBeInSpace(space : Space) : boolean
+        + {abstract} canDoAction(action : String) : boolean
+        # isWithinAllowedPeriod(now : LocalDateTime
+    }
+
+    class NoPrivileges extends "Privileges" {
+        + canSendRequests(now : LocalDateTime) : boolean
+        + canBeInSpace(space : Space) : boolean
+        + canDoAction(action : String) : boolean
+    }
+
+    class Employee extends "Privileges" {
+        + canSendRequests(now : LocalDateTime) : boolean
+        + canBeInSpace(space : Space) : boolean
+        + canDoAction(action : String) : boolean
+    }
+
+    class Manager extends "Privileges" {
+        + canSendRequests(now : LocalDateTime) : boolean
+        + canBeInSpace(space : Space) : boolean
+        + canDoAction(action : String) : boolean
+    }
+
+    class Admin extends "Privileges" {
+        + canSendRequests(now : LocalDateTime) : boolean
+        + canBeInSpace(space : Space) : boolean
+        + canDoAction(action : String) : boolean
+    }
+}
+@enduml

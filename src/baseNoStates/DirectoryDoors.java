@@ -3,6 +3,7 @@ package baseNoStates;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+// Unused, only here to avoid potential problems
 public final class DirectoryDoors {
   private static ArrayList<Door> allDoors;
 

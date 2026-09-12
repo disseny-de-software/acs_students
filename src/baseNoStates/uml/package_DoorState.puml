@@ -1,0 +1,68 @@
+@startuml
+'https://plantuml.com/class-diagram
+skinparam classAttributeIconSize 0
+
+package "DoorState" {
+    abstract class "DoorState" {
+        # doorId : String
+        + {abstract} open() : DoorState
+        + {abstract} close() : DoorState
+        + {abstract} lock() : DoorState
+        + {abstract} unlock() : DoorState
+        + {abstract} unlockShortly() : DoorState
+        + {abstract} isClosed() : boolean
+        + {abstract} getState() : String
+    }
+
+    class "Open" extends "DoorState" {
+        + open() : DoorState
+        + close() : DoorState
+        + lock() : DoorState
+        + unlock() : DoorState
+        + unlockShortly() : DoorState
+        + isClosed() : boolean
+        + getState() : String
+    }
+
+    class "Closed" extends "DoorState" {
+        + open() : DoorState
+        + close() : DoorState
+        + lock() : DoorState
+        + unlock() : DoorState
+        + unlockShortly() : DoorState
+        + isClosed() : boolean
+        + getState() : String
+    }
+
+    class "Locked" extends "DoorState" {
+        + open() : DoorState
+        + close() : DoorState
+        + lock() : DoorState
+        + unlock() : DoorState
+        + unlockShortly() : DoorState
+        + isClosed() : boolean
+        + getState() : String
+    }
+
+    class "UnlockedShortly" extends "DoorState" {
+        - isOpen : boolean
+        + open() : DoorState
+        + close() : DoorState
+        + lock() : DoorState
+        + unlock() : DoorState
+        + unlockShortly() : DoorState
+        + isClosed() : boolean
+        + getState() : String
+    }
+
+    class "Propped" extends "DoorState" {
+        + open() : DoorState
+        + close() : DoorState
+        + lock() : DoorState
+        + unlock() : DoorState
+        + unlockShortly() : DoorState
+        + isClosed() : boolean
+        + getState() : String
+    }
+}
+@enduml

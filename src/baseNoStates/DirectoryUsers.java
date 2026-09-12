@@ -2,6 +2,7 @@ package baseNoStates;
 
 import java.util.ArrayList;
 
+// Unused, only here to avoid potential problems
 public final class DirectoryUsers {
   private static final ArrayList<User> users = new ArrayList<>();
 

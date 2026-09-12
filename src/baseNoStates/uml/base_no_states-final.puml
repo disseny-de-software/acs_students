@@ -1,0 +1,156 @@
+@startuml
+'https://plantuml.com/class-diagram
+skinparam classAttributeIconSize 0
+
+class Webserver {
+    - {static} PORT :int
+    - {static} FORMATTER : DateTimeFormatter
+    + Webserver()
+}
+
+class SocketThread {
+    - insocked : Socked
+    - makeRequest(tokens : String[]) : Request
+    - makeRequestReader(tokens : String[]) : RequestReader
+    - makeRequestArea(tokens : String[]) : RequestArea
+    - makeHeaderAnswer() : String
+    - makeJsonAnswer(request : Request) : String
+    + run()
+}
+
+Webserver +-right- SocketThread
+
+note right of SocketThread
+inner class
+of Webserver
+end note
+
+class DirectoryAreas {
+    - {static} rootArea : Area
+    - {static} allDoors : Door[]
+    + {static} makeAreas()
+    + {static} findAreaById(id : String) : Area
+    + {static} findDoorById(id : String) : Door
+}
+
+DirectoryAreas --> "1" Area : "rootArea"
+
+abstract class Area {
+    - id : String
+    + {abstract} getAllDoorsGivingAccess() : Door[]
+    + {abstract} findAreaById(id : String) : Area
+    + {abstract} getSpaces() : Space[]
+}
+
+class Partition {
+    - subareas : Area[]
+    + getAllDoorsGivingAccess() : Door[]
+    + findAreaById(id : String) : Area
+    + getSpaces() : Space[]
+    + addArea(newArea : Area)
+}
+
+Partition --> "*" Area : "subareas"
+Area <|-- Partition
+
+class Space {
+    - doorsGivingAccess : Door[]
+    - subareas : Area[]
+    + getAllDoorsGivingAccess() : Door[]
+    + findAreaById(id : String) : Area
+    + getSpaces() : Space[]
+    + addDoor(newDoor : Door)
+}
+
+Space --> "*" Door : "doorsGivingAccess"
+Area <|-- Space
+
+class Door {
+    - id : String
+    - state : DoorState
+    - spaceComingFrom : Space
+    - spaceGoingTo : Space
+    - clock : Clock
+    + Door(id : String)
+    + processRequest(request : RequestReader)
+    - doAction(action : String)
+    + toJson() : JSONObject
+    '+ toString() : String
+    '+ isClosed() :boolean
+    '+ setClosed(b : boolean)
+    '+ getStateName() : String
+    + updateFromTimer()
+}
+
+Door --> "1" DoorState.DoorState : "state"
+
+class Clock {
+    - date : LocalDateTime
+    - timer : Timer
+    - period : int
+    - observer : Door
+    + Clock(observer : Door, period : int)
+    + start()
+    + stop()
+}
+
+Clock --> "1" Door : observer
+
+
+class DirectoryUserGroups {
+    - {static} userGroups : UserGroup[]
+    + {static} makeUserGroups()
+    + {static} findUserByCredential(credential : String) : User
+}
+
+DirectoryUserGroups --> "*" UserGroup : "userGroups"
+
+class UserGroup {
+    - users : User[]
+    - privileges : Privileges
+    + findUserByCredential(credential : String) : User
+    + canSendRequests(now : localDateTime) : boolean
+    + canBeInSpace(space : Space) : boolean
+    + canDoAction(action : String) : boolean
+}
+
+UserGroup --> "*" User : users
+
+class User {
+    - name : String
+    - credential : String
+    - userGroup : UserGroup
+    + User(name: String, credential: String)
+    + toString() : String
+    + canSendRequests(now : localDateTime) : boolean
+    + canBeInSpace(space : Space) : boolean
+    + canDoAction(action : String) : boolean
+}
+
+UserGroup --> "1" Privileges.Privileges : privileges
+
+
+class Main {
+    + {static} main(args : String)
+}
+
+note right of Main::main
+    DirectoryAreas.makeAreas()
+    DiretoryUserGroups.makeUserGroups()
+    new Webserver()
+end note
+
+Main -[hidden]down- Webserver
+Webserver -[hidden]down- DirectoryAreas
+DirectoryAreas -[hidden]right- DirectoryUserGroups
+Clock -[hidden]left- Door
+
+
+package "DoorState" {
+    abstract class "DoorState"
+}
+
+package Privileges {
+    abstract class "Privileges"
+}
+@enduml
